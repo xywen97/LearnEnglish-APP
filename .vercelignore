@@ -1,0 +1,4 @@
+# 只忽略不必要的文件
+.git
+node_modules
+*.log 
