@@ -9,8 +9,11 @@ class WordLearningApp {
         
         this.initializeElements();
         this.bindEvents();
-        this.loadWordBank();
-        this.displayCurrentWord();
+        
+        // 延迟初始化，确保DOM完全加载
+        setTimeout(() => {
+            this.loadWordBank();
+        }, 100);
     }
 
     initializeElements() {
@@ -30,6 +33,12 @@ class WordLearningApp {
         this.keys = document.querySelectorAll('.key');
         this.successModal = document.getElementById('successModal');
         this.successWord = document.getElementById('successWord');
+        
+        // 初始化成功弹窗为隐藏状态
+        if (this.successModal) {
+            this.successModal.style.display = 'none';
+            this.successModal.classList.remove('show');
+        }
     }
 
     bindEvents() {
@@ -38,7 +47,6 @@ class WordLearningApp {
             this.currentBank = e.target.value;
             this.loadWordBank();
             this.resetCurrentWord();
-            this.displayCurrentWord();
         });
 
         // 模式切换事件
@@ -79,10 +87,26 @@ class WordLearningApp {
     }
 
     loadWordBank() {
+        // 确保wordBanks已经加载
+        if (typeof wordBanks === 'undefined') {
+            console.error('词库数据未加载，等待重试...');
+            setTimeout(() => this.loadWordBank(), 200);
+            return;
+        }
+        
         this.words = wordBanks[this.currentBank] || [];
         this.totalWordsSpan.textContent = this.words.length;
         this.currentWordIndex = 0;
         this.currentIndexSpan.textContent = this.currentWordIndex + 1;
+        
+        console.log(`加载词库: ${this.currentBank}, 单词数量: ${this.words.length}`);
+        
+        // 词库加载完成后显示第一个单词
+        if (this.words.length > 0) {
+            this.displayCurrentWord();
+        } else {
+            console.error('词库为空');
+        }
     }
 
     switchMode(mode) {
@@ -107,7 +131,10 @@ class WordLearningApp {
     }
 
     displayCurrentWord() {
-        if (this.words.length === 0) return;
+        if (this.words.length === 0) {
+            console.warn('词库为空，无法显示单词');
+            return;
+        }
 
         const currentWord = this.words[this.currentWordIndex];
         
@@ -288,12 +315,14 @@ class WordLearningApp {
         
         // 显示成功弹窗
         this.successWord.textContent = `${currentWord.word} - ${currentWord.meaning}`;
+        this.successModal.style.display = 'flex';
         this.successModal.classList.add('show');
         
         // 2秒后自动关闭弹窗并跳转到下一个单词
         setTimeout(() => {
             this.successModal.classList.remove('show');
             setTimeout(() => {
+                this.successModal.style.display = 'none';
                 this.nextWord();
             }, 300); // 等待弹窗关闭动画完成
         }, 2000);
