@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背单词应用</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>背单词应用</h1>
+            
+            <!-- 词库选择 -->
+            <div class="word-bank-selector">
+                <label for="wordBank">选择词库：</label>
+                <select id="wordBank">
+                    <option value="cet4">英语四级</option>
+                    <option value="cet6">英语六级</option>
+                    <option value="ielts">雅思</option>
+                    <option value="toefl">托福</option>
+                    <option value="kaoyan">考研词汇</option>
+                </select>
+            </div>
+
+            <!-- 模式切换 -->
+            <div class="mode-selector">
+                <button id="modeMemory" class="mode-btn active">记单词</button>
+                <button id="modeRecall" class="mode-btn">背单词</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- 单词显示区域 -->
+            <div class="word-display">
+                <div class="word-section">
+                    <div id="wordDisplay" class="word"></div>
+                    <div id="phonetic" class="phonetic"></div>
+                    <div id="meaning" class="meaning"></div>
+                </div>
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-section">
+                <div id="inputArea" class="input-area"></div>
+                <div class="progress">
+                    <span id="currentIndex">1</span> / <span id="totalWords">0</span>
+                </div>
+            </div>
+
+            <!-- 控制按钮 -->
+            <div class="controls">
+                <button id="prevBtn" class="control-btn">上一个</button>
+                <button id="nextBtn" class="control-btn">下一个</button>
+                <button id="resetBtn" class="control-btn">重新开始</button>
+            </div>
+        </main>
+
+        <!-- 虚拟键盘 -->
+        <div class="keyboard">
+            <div class="keyboard-row">
+                <button class="key" data-key="q">Q</button>
+                <button class="key" data-key="w">W</button>
+                <button class="key" data-key="e">E</button>
+                <button class="key" data-key="r">R</button>
+                <button class="key" data-key="t">T</button>
+                <button class="key" data-key="y">Y</button>
+                <button class="key" data-key="u">U</button>
+                <button class="key" data-key="i">I</button>
+                <button class="key" data-key="o">O</button>
+                <button class="key" data-key="p">P</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key" data-key="a">A</button>
+                <button class="key" data-key="s">S</button>
+                <button class="key" data-key="d">D</button>
+                <button class="key" data-key="f">F</button>
+                <button class="key" data-key="g">G</button>
+                <button class="key" data-key="h">H</button>
+                <button class="key" data-key="j">J</button>
+                <button class="key" data-key="k">K</button>
+                <button class="key" data-key="l">L</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key" data-key="z">Z</button>
+                <button class="key" data-key="x">X</button>
+                <button class="key" data-key="c">C</button>
+                <button class="key" data-key="v">V</button>
+                <button class="key" data-key="b">B</button>
+                <button class="key" data-key="n">N</button>
+                <button class="key" data-key="m">M</button>
+                <button class="key backspace" data-key="backspace">←</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成功提示弹窗 -->
+    <div id="successModal" class="success-modal">
+        <div class="success-content">
+            <div class="success-icon">🎉</div>
+            <h2>恭喜！你学会了！</h2>
+            <p id="successWord"></p>
+        </div>
+    </div>
+
+    <script src="words.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
