@@ -207,19 +207,28 @@ class WordLearningApp {
     }
 
     handleKeyInput(e) {
+        // 如果有修饰键按下（Ctrl、Alt、Meta/Cmd），不处理，让浏览器处理快捷键
+        if (e.ctrlKey || e.altKey || e.metaKey) {
+            return;
+        }
+        
         const key = e.key.toLowerCase();
         
+        // 只处理我们需要的按键
         if (key === 'backspace') {
+            e.preventDefault(); // 阻止浏览器后退
             this.handleBackspace();
         } else if (key >= 'a' && key <= 'z') {
+            e.preventDefault(); // 阻止浏览器默认行为
             this.handleLetterInput(key);
         } else if (key === 'arrowleft') {
+            e.preventDefault();
             this.previousWord();
         } else if (key === 'arrowright') {
+            e.preventDefault();
             this.nextWord();
         }
-
-        e.preventDefault();
+        // 对于其他按键，不调用preventDefault()，让浏览器正常处理
     }
 
     handleVirtualKeyInput(key) {
